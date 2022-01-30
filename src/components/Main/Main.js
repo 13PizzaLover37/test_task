@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import "./style.css"
 
 function Main(){
+    document.onload = getData();
     const [easyMode, setEasyMode] = useState(0);
     const [hardMode, setHardMode] = useState(0);
     const [normalMode, setNormalMode] = useState(0);
@@ -13,7 +14,7 @@ function Main(){
     }
 
     function setData(data){
-        // console.log(JSON.parse(data));
+        //this function set values from API to State for future manipulating 
         setEasyMode(data.easyMode.field);
         setHardMode(data.hardMode.field);
         setNormalMode(data.normalMode.field);
@@ -23,56 +24,52 @@ function Main(){
         let select = document.querySelector("select");
         let squareZone = document.querySelector(".square-zone");
 
+        //this loop for create row of squares field
         for(let row = 0; row < select.value; row++){
-                        
-            console.log("row is: " + row);
             let square = document.createElement("div");
             squareZone.appendChild(square);
 
+            //loop for create squares
             for(let col=0; col < select.value; col++){
                 let square = document.createElement("div");
                 square.className = 'square-item';
                 let setRow = row+1;
                 let setCol = col+1;
                 square.value = setRow + "_" + setCol;
-                squareZone.appendChild(square);
-                            
+                squareZone.appendChild(square);            
             }
         }
     }
 
-    function listenerHover(e){
+    function listenerHover(event){
         
-        if(e.target.classList.contains("square-item") ){
-            let row = e.target.value.split("_")[0];
-            let col = e.target.value.split("_")[1];
+        if(event.target.classList.contains("square-item") ){
+            let row = event.target.value.split("_")[0];
+            let col = event.target.value.split("_")[1];
             
-            // console.log("constains: " +e.target.classList.contains("checked") );
-            if (e.target.classList.contains("checked")){
-                e.target.classList.toggle("checked");
+            //I used  toggle function in if and else   in both cases, because without toggle in else
+            // we can't add class "checked" when we hover any square first time
+            if (event.target.classList.contains("checked")){
+                event.target.classList.toggle("checked");
                 
             } else{
-                e.target.classList.toggle("checked");
-                console.log("else work");
+                event.target.classList.toggle("checked");
             }
+
             let notice = document.createElement("li");
             notice.className = "";
             let textNode = document.createTextNode("row: "+ row + " col: "+col);
             notice.appendChild(textNode);
             document.querySelector(".hover-squares ul").appendChild(notice);
-            // e.target.classList.add("checked");
-            console.log(e.target);
         }
         
     }
 
-
-    getData();
+    
     return(
         <div>
             <div className='using-path'>
                 <div className='select-path'>
-                    
                     <select>
                         <option>Pick mode</option>
                         <option value={easyMode}>Easy mode</option>
