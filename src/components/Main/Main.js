@@ -43,7 +43,7 @@ function Main(){
 
     function listenerHover(event){
         
-        if(event.target.classList.contains("square-item") ){
+        if(event.target.classList.contains("square-item")){
             let row = event.target.value.split("_")[0];
             let col = event.target.value.split("_")[1];
             
@@ -57,12 +57,10 @@ function Main(){
             }
 
             let notice = document.createElement("li");
-            notice.className = "";
             let textNode = document.createTextNode("row: "+ row + " col: "+col);
             notice.appendChild(textNode);
             document.querySelector(".hover-squares ul").appendChild(notice);
         }
-        
     }
 
     
