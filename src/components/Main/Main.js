@@ -62,31 +62,23 @@ function Main(){
                 event.target.classList.toggle("checked");
                 let squareValue = event.target.value;
 
-                console.log("value is: " + squareValue );
-                console.log("class list" + event.target.classList);
-
+              
                 for(let child = 0; child < hoverSquaresList.childNodes.length; child++){
                     let childDataValue =  hoverSquaresList.childNodes[child].getAttribute("data-number");
-                    console.log(`this is childdatavalue ${childDataValue}`);
                     if (squareValue === childDataValue){
-                        // let childList = Array(hoverSquaresList.childNodes[0]);
-                        // console.log(`to list ${childList}`);
-                        
-                        hoverSquaresList.removeChild(hoverSquaresList.childNodes[1]);
+                    
                         let deleteObject = hoverSquaresList.childNodes[child];
-                        let deleteObjectChild = deleteObject.childNodes[0];
-                        deleteObject.removeChild(deleteObjectChild);
-                        hoverSquaresList.removeChild(deleteObject);
-                        console.log();
-                        console.log("delete: " + deleteObject.childNodes[0]);
-                        
+                        let deleteObjectChild = deleteObject.firstChild;
+                        deleteObjectChild.textContent = null;
+                        delete deleteObject.childNodes[deleteObjectChild];
+                        hoverSquaresList.removeChild(deleteObject);    
                     }
                 }
                 
             } else{
                 event.target.classList.toggle("checked");
+                
             }
-            console.log(`length ChildNode is : ${hoverSquaresList.childNodes.length}`);
         }
     }
 
