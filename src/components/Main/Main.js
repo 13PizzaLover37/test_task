@@ -23,6 +23,7 @@ function Main(){
     function drawOnClick(){
         let select = document.querySelector("select");
         let squareZone = document.querySelector(".square-zone");
+        squareZone.style.visibility = "visible";
 
         //this loop for create row of squares field
         for(let row = 0; row < select.value; row++){
@@ -47,23 +48,48 @@ function Main(){
             let row = event.target.value.split("_")[0];
             let col = event.target.value.split("_")[1];
             
+            
+            let notice = document.createElement("li");
+            let textNode = document.createTextNode("row: "+ row + " col: "+col);
+            let hoverSquaresList = document.querySelector(".hover-squares ul");
+            notice.setAttribute("data-number", `${row}_${col}`);
+            notice.appendChild(textNode);
+            hoverSquaresList.appendChild(notice);
+
             //I used  toggle function in if and else   in both cases, because without toggle in else
             // we can't add class "checked" when we hover any square first time
             if (event.target.classList.contains("checked")){
                 event.target.classList.toggle("checked");
+                let squareValue = event.target.value;
+
+                console.log("value is: " + squareValue );
+                console.log("class list" + event.target.classList);
+
+                for(let child = 0; child < hoverSquaresList.childNodes.length; child++){
+                    let childDataValue =  hoverSquaresList.childNodes[child].getAttribute("data-number");
+                    console.log(`this is childdatavalue ${childDataValue}`);
+                    if (squareValue === childDataValue){
+                        // let childList = Array(hoverSquaresList.childNodes[0]);
+                        // console.log(`to list ${childList}`);
+                        
+                        hoverSquaresList.removeChild(hoverSquaresList.childNodes[1]);
+                        let deleteObject = hoverSquaresList.childNodes[child];
+                        let deleteObjectChild = deleteObject.childNodes[0];
+                        deleteObject.removeChild(deleteObjectChild);
+                        hoverSquaresList.removeChild(deleteObject);
+                        console.log();
+                        console.log("delete: " + deleteObject.childNodes[0]);
+                        
+                    }
+                }
                 
             } else{
                 event.target.classList.toggle("checked");
             }
-
-            let notice = document.createElement("li");
-            let textNode = document.createTextNode("row: "+ row + " col: "+col);
-            notice.appendChild(textNode);
-            document.querySelector(".hover-squares ul").appendChild(notice);
+            console.log(`length ChildNode is : ${hoverSquaresList.childNodes.length}`);
         }
     }
 
-    
     return(
         <div>
             <div className='using-path'>
